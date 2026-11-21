@@ -1,0 +1,37 @@
+{% load static %}
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ViGuard · Phân tích bình luận tiếng Việt</title>
+  <link rel="stylesheet" href="{% static 'detector/app.css' %}">
+  <script src="{% static 'detector/app.js' %}?v=2" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header><a class="brand" href="/" aria-label="ViGuard trang chủ"><span class="logo">V</span> ViGuard</a><span class="project-tag">VIETNAMESE NLP · RESEARCH PROJECT</span><a class="admin" href="/admin/">Quản trị ↗</a></header>
+    <main>
+      <section class="intro"><p class="eyebrow">HIỂU NGÔN NGỮ · NHẬN DIỆN ĐỘC HẠI</p><h1>Một bình luận.<br>Thêm một góc nhìn.</h1><p class="lead">Phân tích bình luận tiếng Việt thành ba nhóm: sạch, xúc phạm và thù ghét. Xem kết quả phân tích để hỗ trợ việc đánh giá nội dung.</p></section>
+      <section class="workspace" aria-label="Công cụ phân tích bình luận">
+        <div class="editor card"><div class="card-heading"><span class="step">01</span><h2>Nội dung cần phân tích</h2><span id="counter">0 / 2000</span></div>
+          {% if remote_backend %}<p class="hint">Bình luận được gửi đến CheapKeyAI để phân tích bằng mô hình AI. Không nhập thông tin cá nhân hoặc dữ liệu bí mật.</p>{% endif %}
+          <form id="predict-form">{% csrf_token %}
+            <label for="comment">Bình luận tiếng Việt</label>
+            <textarea id="comment" name="text" maxlength="2000" rows="7" required placeholder="Nhập bình luận bạn muốn kiểm tra…" aria-describedby="input-hint"></textarea>
+            <p class="hint" id="input-hint">Giữ nguyên cách viết, dấu câu và tiếng lóng trong bình luận.</p>
+            <div class="examples"><span>Thử nhanh</span><button type="button" data-example="Cảm ơn bạn đã chia sẻ, bài viết rất hữu ích!">Lời cảm ơn</button><button type="button" data-example="Mình không đồng ý với quan điểm này.">Ý kiến trái chiều</button></div>
+            <button class="primary" id="submit" type="submit">Phân tích bình luận <span aria-hidden="true">↗</span></button>
+          </form>
+        </div>
+        <div class="result card" aria-live="polite" aria-busy="false" id="result-panel"><div class="card-heading"><span class="step">02</span><h2>Kết quả phân tích</h2><span class="status" id="status">Sẵn sàng</span></div>
+          <div id="empty-state"><div class="empty-icon" aria-hidden="true">≋</div><h3>Ngôn ngữ cần ngữ cảnh</h3><p>Nhập một bình luận và bắt đầu phân tích. Kết quả sẽ xuất hiện tại đây.</p></div>
+          <div id="prediction" hidden><div class="result-top"><span class="label-badge" id="result-label"></span><span id="confidence"></span></div><p id="analysis-explanation" hidden></p><p class="distribution-title" id="distribution-title">Phân bố dự đoán</p><div id="probabilities"></div></div>
+          <p id="error" class="error" role="alert" hidden></p>
+        </div>
+      </section>
+      <section class="legend" aria-label="Giải thích các nhãn"><article><span class="dot clean"></span><h3>Sạch</h3><p>Nội dung bình thường, bao gồm ý kiến phản đối được diễn đạt phù hợp.</p></article><article><span class="dot offensive"></span><h3>Xúc phạm</h3><p>Ngôn từ tục tĩu hoặc xúc phạm nhưng không nhắm vào một đối tượng cụ thể.</p></article><article><span class="dot hate"></span><h3>Thù ghét</h3><p>Lời công kích nhắm trực tiếp vào cá nhân hoặc nhóm theo hướng dẫn nhãn ViHSD.</p></article></section>
+    </main>
+    <footer><span>{% if remote_backend %}{% if evaluation %}Đã đánh giá {{ evaluation.samples }} câu ViHSD · Macro-F1 {{ evaluation.macro_f1|floatformat:4 }}{% else %}Phân tích qua API · Chưa có báo cáo đánh giá phù hợp{% endif %}{% else %}ViHSD · TF-IDF / BiLSTM / PhoBERT{% endif %}</span><span id="model-status">Đang kiểm tra cấu hình mô hình…</span></footer>
+  </div>
+</body>
+</html>

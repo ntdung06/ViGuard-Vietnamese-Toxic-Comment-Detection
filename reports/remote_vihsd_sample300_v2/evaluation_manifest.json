@@ -1,0 +1,87 @@
+{
+  "dataset_name": "ViHSD",
+  "split": "test",
+  "csv_sha256": "ba8ae9b62c40caebcbe8af9a09590296bca286e83e22dd639de31a62ed16f5a5",
+  "label_mapping": {
+    "0": "CLEAN",
+    "1": "OFFENSIVE",
+    "2": "HATE"
+  },
+  "model": "gpt-4o-mini",
+  "base_url": "https://cheapkeyai.shop/v1",
+  "prompt_sha256": "c89e53e509db33097a6d890b2ab1d5e7b5eb142392a1ff7fd71b35cc3c4f7414",
+  "classifier_source_sha256": "38eebf35acd98f8d7a38365cc760cab92d5004fd014c117265777557a9e61d41",
+  "sampling": "random sample, seed=42",
+  "seed": 42,
+  "sample_size": 300,
+  "batch_size": 10,
+  "workers": 3,
+  "timeout": 120,
+  "completed_at_utc": "2026-11-03T15:47:12.335818+00:00",
+  "execution_runs": [
+    {
+      "batch_size": 10,
+      "workers": 3,
+      "note": "Imported from existing checkpoint"
+    },
+    {
+      "started_at_utc": "2026-11-03T15:46:55.755571+00:00",
+      "batch_size": 1,
+      "workers": 3,
+      "already_completed": 290
+    }
+  ],
+  "evaluated_rows": 300,
+  "available_rows": 6680,
+  "class_counts": {
+    "CLEAN": 247,
+    "OFFENSIVE": 23,
+    "HATE": 30
+  },
+  "duplicate_text_rows_in_input": 107,
+  "input_majority_class_fraction": 0.8305389221556886,
+  "metrics": {
+    "macro_f1": 0.6055275061327945,
+    "accuracy": 0.8066666666666666,
+    "per_class": {
+      "CLEAN": {
+        "precision": 0.9469026548672567,
+        "recall": 0.8663967611336032,
+        "f1-score": 0.904862579281184,
+        "support": 247.0
+      },
+      "OFFENSIVE": {
+        "precision": 0.26,
+        "recall": 0.5652173913043478,
+        "f1-score": 0.3561643835616438,
+        "support": 23.0
+      },
+      "HATE": {
+        "precision": 0.625,
+        "recall": 0.5,
+        "f1-score": 0.5555555555555556,
+        "support": 30.0
+      },
+      "accuracy": 0.8066666666666666,
+      "macro avg": {
+        "precision": 0.6106342182890856,
+        "recall": 0.6438713841459837,
+        "f1-score": 0.6055275061327945,
+        "support": 300.0
+      },
+      "weighted avg": {
+        "precision": 0.8620498525073746,
+        "recall": 0.8066666666666666,
+        "f1-score": 0.8278650152367897,
+        "support": 300.0
+      }
+    }
+  },
+  "limitations": [
+    "Provider model identity is self-reported; underlying training data is unknown.",
+    "Possible pretraining contamination cannot be ruled out.",
+    "Prompt taxonomy may differ from ViHSD annotation guidelines.",
+    "A subset evaluation does not establish full-test performance.",
+    "Do not tune prompt/model on these test predictions."
+  ]
+}
